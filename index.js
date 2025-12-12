@@ -1,30 +1,17 @@
+// index.js
 const express = require('express');
+const productRoutes = require('./product.routes');
+const { logRequest } = require('./middleware');
+
 const app = express();
+const PORT = 3000;
 
-// Hardcoded in-memory products array
-const products = [
-  { id: 1, name: 'Product 1', brand: 'Brand A' },
-  { id: 2, name: 'Product 2', brand: 'Brand B' },
-  { id: 3, name: 'Product 3', brand: 'Brand A' }
-];
+// Apply middleware globally
+app.use(logRequest);
 
-// handle GET request
-app.get('/', (req, res) => {
-  res.send('response for GET request');
+// Use product routes
+app.use(productRoutes);
+
+app.listen(PORT, () => {
+  console.log(`Server listening at http://localhost:${PORT}`);
 });
-
-// Route: /products/:brand
-app.get('/products/:brand', (req, res) => {
-  const { brand } = req.params;
-
-  const filteredProducts = products.filter(
-    product => product.brand === brand
-  );
-
-  res.json(filteredProducts);
-});
-
-// start the server
-app.listen(3000, () =>
-  console.log(`server start at http://localhost:3000/`)
-);
