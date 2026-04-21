@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: nodejs_course_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: nodejs_course_admin
+      POSTGRES_PASSWORD: my_password
+      POSTGRES_DB: nodejs_course_database
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
